@@ -43,12 +43,14 @@ const SinglePost = () => {
   const [commentsRealTime, setCommentsRealTime] = useState([]);
 
   const { id } = useParams();
-  //fetch single post
+
+  // fetch single post
   const displaySinglePost = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get(`/api/post/${id}`);
-      // console.log(data)
+      const { data } = await axios.get(
+        `https://project-tugas-akhir.vercel.app/api/post/${id}`
+      );
       setTitle(data.post.title);
       setContent(data.post.content);
       setImage(data.post.image.url);
@@ -65,7 +67,6 @@ const SinglePost = () => {
   }, []);
 
   useEffect(() => {
-    // console.log('SOCKET IO', socket);
     socket.on("new-comment", (newComment) => {
       setCommentsRealTime(newComment);
     });
@@ -75,14 +76,15 @@ const SinglePost = () => {
   const addComment = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put(`/api/comment/post/${id}`, { comment });
+      const { data } = await axios.put(
+        `https://project-tugas-akhir.vercel.app/api/comment/post/${id}`,
+        { comment }
+      );
       if (data.success === true) {
         setComment("");
         toast.success("comment added");
-        //displaySinglePost();
         socket.emit("comment", data.post.comments);
       }
-      //console.log("comment post", data.post)
     } catch (error) {
       console.log(error);
       toast.error(error);
