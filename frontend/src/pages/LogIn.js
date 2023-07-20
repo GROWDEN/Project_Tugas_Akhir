@@ -54,14 +54,14 @@ const LogIn = () => {
 
         // Lakukan sesuatu setelah login berhasil (misalnya, navigasi ke halaman lain)
         // Misalnya, Anda bisa menambahkan:
-        // navigate("/dashboard");
+        navigate("/dashboard");
       } catch (error) {
         // Tanggapi error (opsional)
         console.error("Error saat melakukan login:", error);
 
         // Set error form jika diperlukan (opsional)
-        // actions.setFieldError("email", "Email atau password salah");
-        // actions.setFieldError("password", "Email atau password salah");
+        actions.setFieldError("email", "Email atau password salah");
+        actions.setFieldError("password", "Email atau password salah");
       }
     },
   });
