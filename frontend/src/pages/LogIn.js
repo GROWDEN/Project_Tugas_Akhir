@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { userSignInAction } from "../redux/actions/userAction";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import axios from "axios";
+import axios from "axios"; // Impor axios untuk melakukan permintaan HTTP
 
 const validationSchema = yup.object({
   email: yup
@@ -27,16 +27,15 @@ const LogIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuthenticated, userInfo } = useSelector((state) => state.signIn);
-
   useEffect(() => {
     if (isAuthenticated) {
       if (userInfo.role === "admin") {
-        navigate("/admin/dashboard");
+        navigate("https://project-tugas-akhir.vercel.app/admin/dashboard");
       } else {
-        navigate("/user/dashboard");
+        navigate("https://project-tugas-akhir.vercel.app/user/dashboard");
       }
     }
-  }, [isAuthenticated, navigate, userInfo.role]);
+  }, [isAuthenticated]);
 
   const formik = useFormik({
     initialValues: {
@@ -47,26 +46,22 @@ const LogIn = () => {
     onSubmit: async (values, actions) => {
       try {
         const response = await axios.post(
-          "https://project-tugas-akhir.vercel.app/login",
+          "https://project-tugas-akhir.vercel.app/login", // Ganti dengan endpoint login yang sesuai
           values
         );
+        // Tanggapi respons dari server (opsional)
         console.log("Respons dari server:", response.data);
 
-        // Dispatch action untuk menyimpan status login dan informasi pengguna
-        dispatch(userSignInAction(response.data));
-
-        // Setelah login berhasil, akan diarahkan ke dashboard sesuai peran pengguna
-        if (response.data.role === "admin") {
-          navigate("/admin/dashboard");
-        } else {
-          navigate("/user/dashboard");
-        }
+        // Lakukan sesuatu setelah login berhasil (misalnya, navigasi ke halaman lain)
+        // Misalnya, Anda bisa menambahkan:
+        // navigate("/dashboard");
       } catch (error) {
+        // Tanggapi error (opsional)
         console.error("Error saat melakukan login:", error);
 
-        // Set error form jika login gagal
-        actions.setFieldError("email", "Email or password is incorrect");
-        actions.setFieldError("password", "Email or password is incorrect");
+        // Set error form jika diperlukan (opsional)
+        // actions.setFieldError("email", "Email atau password salah");
+        // actions.setFieldError("password", "Email atau password salah");
       }
     },
   });
