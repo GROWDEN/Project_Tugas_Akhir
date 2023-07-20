@@ -14,11 +14,11 @@ import { useNavigate, useParams } from "react-router-dom";
 const validationSchema = yup.object({
   title: yup
     .string("Add a post title")
-    .min(4, "text content should havea minimum of 4 characters ")
+    .min(4, "text content should have a minimum of 4 characters ")
     .required("Post title is required"),
   content: yup
     .string("Add text content")
-    .min(10, "text content should havea minimum of 10 characters ")
+    .min(10, "text content should have a minimum of 10 characters ")
     .required("text content is required"),
 });
 
@@ -57,9 +57,8 @@ const EditPost = () => {
 
   //show post by Id
   const singlePostById = async () => {
-    // console.log(id)
     try {
-      const { data } = await axios.get(`/api/post/${id}`);
+      const { data } = await axios.get(`https://project-tugas-akhir.vercel.app/api/post/${id}`);
       setTitle(data.post.title);
       setContent(data.post.content);
       setImagePreview(data.post.image.url);
@@ -76,7 +75,7 @@ const EditPost = () => {
 
   const updatePost = async (values) => {
     try {
-      const { data } = await axios.put(`/api/update/post/${id}`, values);
+      const { data } = await axios.put(`https://project-tugas-akhir.vercel.app/api/update/post/${id}`, values);
       if (data.success === true) {
         toast.success("post updated");
         navigate("/admin/dashboard");
