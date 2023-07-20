@@ -1,3 +1,6 @@
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -14,10 +17,6 @@ import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
-//import image from '../images/blog.jpg'
 
 const PostCard = ({
   id,
@@ -27,7 +26,6 @@ const PostCard = ({
   content,
   comments,
   likes,
-  showPosts,
   likesId,
 }) => {
   const { userInfo } = useSelector((state) => state.signIn);
@@ -35,7 +33,9 @@ const PostCard = ({
   //add like
   const addLike = async () => {
     try {
-      const { data } = await axios.put(`/api/addlike/post/${id}`);
+      const { data } = await axios.put(
+        `https://project-tugas-akhir.vercel.app/api/addlike/post/${id}`
+      );
       // console.log("likes", data.post);
       // if (data.success == true) {
       //     showPosts();
@@ -49,7 +49,9 @@ const PostCard = ({
   //remove like
   const removeLike = async () => {
     try {
-      const { data } = await axios.put(`/api/removelike/post/${id}`);
+      const { data } = await axios.put(
+        `https://project-tugas-akhir.vercel.app/api/removelike/post/${id}`
+      );
       // console.log("remove likes", data.post);
       // if (data.success == true) {
       //     showPosts();
@@ -82,7 +84,6 @@ const PostCard = ({
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {/* {content} */}
-
           <Box
             component="span"
             dangerouslySetInnerHTML={{
