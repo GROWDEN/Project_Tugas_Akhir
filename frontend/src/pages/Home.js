@@ -8,7 +8,11 @@ import moment from "moment";
 import Loader from "../components/Loader";
 import { io } from "socket.io-client";
 
-const socket = io("/", {
+const api = axios.create({
+  baseURL: "https://project-tugas-akhir.vercel.app/",
+});
+
+const socket = io("https://project-tugas-akhir.vercel.app/", {
   reconnection: true,
 });
 
@@ -19,11 +23,10 @@ const Home = () => {
   const [postRemoveLike, setPostRemoveLike] = useState([]);
 
   //display posts
-
   const showPosts = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get("/api/posts/show");
+      const { data } = await api.get("/api/posts/show");
       setPosts(data.posts);
       setLoading(false);
     } catch (error) {
