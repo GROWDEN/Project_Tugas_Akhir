@@ -1,4 +1,5 @@
-import "./App.css";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -24,7 +25,35 @@ const CreatePostHOC = Layout(CreatePost);
 const EditPostHOC = Layout(EditPost);
 const UserDashboardHOC = Layout(UserDashboard);
 
+const API_BASE_URL = "https://project-tugas-akhir.vercel.app/";
+
 const App = () => {
+  const [homeData, setHomeData] = useState({});
+  const [singlePostData, setSinglePostData] = useState({});
+
+  useEffect(() => {
+    fetchHomeData();
+    fetchSinglePostData("post_id"); // Ganti "post_id" dengan ID post yang ingin Anda tampilkan
+  }, []);
+
+  const fetchHomeData = async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/home`);
+      setHomeData(response.data);
+    } catch (error) {
+      console.error("Error fetching home data:", error);
+    }
+  };
+
+  const fetchSinglePostData = async (postId) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/api/post/${postId}`);
+      setSinglePostData(response.data);
+    } catch (error) {
+      console.error("Error fetching single post data:", error);
+    }
+  };
+
   return (
     <>
       <ToastContainer />
@@ -32,10 +61,13 @@ const App = () => {
         <ProSidebarProvider>
           <BrowserRouter>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home data={homeData} />} />
               <Route path="/login" element={<LogIn />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/post/:id" element={<SinglePost />} />
+              <Route
+                path="/post/:id"
+                element={<SinglePost data={singlePostData} />}
+              />
               <Route path="*" element={<NotFound />} />
               <Route
                 path="/admin/dashboard"
