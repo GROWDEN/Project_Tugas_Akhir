@@ -45,14 +45,14 @@ const CreatePost = () => {
   });
 
   const createNewPost = async (values) => {
-    try {
-      const { data } = await axios.post("/api/post/create", values);
-      toast.success("post created");
-    } catch (error) {
-      console.log(error);
-      toast.error(error);
-    }
-  };
+  try {
+    const { data } = await axios.post('https://project-tugas-akhir.vercel.app/api/post/create', values);
+    toast.success('post created');
+  } catch (error) {
+    console.log(error);
+    toast.error(error.message);
+  }
+};
 
   return (
     <>
