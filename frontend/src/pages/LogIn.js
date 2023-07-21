@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { userSignInAction } from "../redux/actions/userAction";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import axios from "axios"; // Impor axios untuk melakukan permintaan HTTP
 
 const validationSchema = yup.object({
   email: yup
@@ -30,9 +29,9 @@ const LogIn = () => {
   useEffect(() => {
     if (isAuthenticated) {
       if (userInfo.role === "admin") {
-        navigate("https://project-tugas-akhir.vercel.app/admin/dashboard");
+        navigate("/admin/dashboard");
       } else {
-        navigate("https://project-tugas-akhir.vercel.app/user/dashboard");
+        navigate("/user/dashboard");
       }
     }
   }, [isAuthenticated]);
@@ -43,26 +42,12 @@ const LogIn = () => {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (values, actions) => {
-      try {
-        const response = await axios.post(
-          "https://project-tugas-akhir.vercel.app/login", // Ganti dengan endpoint login yang sesuai
-          values
-        );
-        // Tanggapi respons dari server (opsional)
-        console.log("Respons dari server:", response.data);
-
-        // Lakukan sesuatu setelah login berhasil (misalnya, navigasi ke halaman lain)
-        // Misalnya, Anda bisa menambahkan:
-        navigate("/dashboard");
-      } catch (error) {
-        // Tanggapi error (opsional)
-        console.error("Error saat melakukan login:", error);
-
-        // Set error form jika diperlukan (opsional)
-        actions.setFieldError("email", "Email atau password salah");
-        actions.setFieldError("password", "Email atau password salah");
-      }
+    onSubmit: (values, actions) => {
+      //  alert(JSON.stringify(values, null, 2));
+      dispatch(
+        userSignInAction(values, "https://project-tugas-akhir.vercel.app/login")
+      );
+      actions.resetForm();
     },
   });
 
