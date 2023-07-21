@@ -14,13 +14,15 @@ const AdminDashboard = () => {
   const [posts, setPosts] = useState([]);
 
   const displayPost = async () => {
-  try {
-    const { data } = await axios.get("https://project-tugas-akhir.vercel.app/api/posts/show");
-    setPosts(data.posts);
-  } catch (error) {
-    console.log(error);
-  }
-};
+    try {
+      const { data } = await axios.get(
+        "https://project-tugas-akhir.vercel.app/api/posts/show"
+      );
+      setPosts(data.posts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     displayPost();
@@ -28,20 +30,21 @@ const AdminDashboard = () => {
 
   //delete post by Id
   const deletePostById = async (e, id) => {
-  // console.log(id)
-  if (window.confirm("Are you sure you want to delete this post?")) {
-    try {
-      const { data } = await axios.delete(`https://project-tugas-akhir.vercel.app/api/delete/post/${id}`);
-      if (data.success === true) {
-        toast.success(data.message);
-        displayPost();
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      try {
+        const { data } = await axios.delete(
+          `https://project-tugas-akhir.vercel.app/api/delete/post/${id}`
+        );
+        if (data.success === true) {
+          toast.success(data.message);
+          displayPost();
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error(error);
       }
-    } catch (error) {
-      console.log(error);
-      toast.error(error);
     }
-  }
-};
+  };
 
   const columns = [
     {
