@@ -9,7 +9,7 @@ import Loader from "../components/Loader";
 import { io } from "socket.io-client";
 
 const api = axios.create({
-  baseURL: "https://project-tugas-akhir.vercel.app/",
+  baseURL: "https://project-tugas-akhir.vercel.app",
 });
 
 const socket = io("https://project-tugas-akhir.vercel.app/", {
