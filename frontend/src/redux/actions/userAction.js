@@ -15,12 +15,10 @@ import {
   USER_SIGNUP_SUCCESS,
 } from "../constants/userConstant";
 
-const API_BASE_URL = "https://project-tugas-akhir.vercel.app";
-
 export const userSignInAction = (user) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST });
   try {
-    const { data } = await axios.post(`${API_BASE_URL}/api/signin`, user);
+    const { data } = await axios.post(`https://project-tugas-akhir.vercel.app/api/signin`, user);
     localStorage.setItem("userInfo", JSON.stringify(data));
     dispatch({
       type: USER_SIGNIN_SUCCESS,
@@ -40,7 +38,7 @@ export const userSignInAction = (user) => async (dispatch) => {
 export const userSignUpAction = (user) => async (dispatch) => {
   dispatch({ type: USER_SIGNUP_REQUEST });
   try {
-    const { data } = await axios.post(`${API_BASE_URL}/api/signup`, user);
+    const { data } = await axios.post(`https://project-tugas-akhir.vercel.app/api/signup`, user);
 
     dispatch({
       type: USER_SIGNUP_SUCCESS,
@@ -61,7 +59,7 @@ export const userLogoutAction = () => async (dispatch) => {
   dispatch({ type: USER_LOGOUT_REQUEST });
   try {
     localStorage.removeItem("userInfo");
-    const { data } = await axios.get(`${API_BASE_URL}/api/logout`);
+    const { data } = await axios.get(`$https://project-tugas-akhir.vercel.app/api/logout`);
     dispatch({
       type: USER_LOGOUT_SUCCESS,
       payload: data,
@@ -80,7 +78,7 @@ export const userLogoutAction = () => async (dispatch) => {
 export const userProfileAction = () => async (dispatch) => {
   dispatch({ type: USER_LOAD_REQUEST });
   try {
-    const { data } = await axios.get(`${API_BASE_URL}/api/me`);
+    const { data } = await axios.get(`https://project-tugas-akhir.vercel.app/api/me`);
     dispatch({
       type: USER_LOAD_SUCCESS,
       payload: data,
