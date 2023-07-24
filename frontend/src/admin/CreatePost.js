@@ -46,14 +46,24 @@ const CreatePost = () => {
 
   const createNewPost = async (values) => {
     try {
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("content", values.content);
+      formData.append("image", values.image); // Make sure values.image is a File object
+
       const { data } = await axios.post(
         "https://project-tugas-akhir.vercel.app/api/post/create",
-        values
+        formData, // Send FormData instead of values object
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set content type to multipart/form-data
+          },
+        }
       );
       toast.success("post created");
     } catch (error) {
       console.log(error);
-      toast.error(error);
+      toast.error(error.response.data.error);
     }
   };
 
