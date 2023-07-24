@@ -15,12 +15,14 @@ const io = new Server(server);
 
 const errorHandler = require("./middleware/error");
 
-//database connection
-const dbURI =
-  "mongodb+srv://admin:admin@marketblogdb.jhbmvfq.mongodb.net/?retryWrites=true&w=majority";
+//import routes
+const authRoutes = require("./routes/authRoutes");
+const postRoutes = require("./routes/postRoutes");
+const { Socket } = require("dgram");
 
+//database connection
 mongoose
-  .connect(dbURI, {
+  .connect('mongodb+srv://admin:admin@marketblogdb.jhbmvfq.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
@@ -42,8 +44,6 @@ app.use(cookieParser());
 app.use(cors());
 
 //ROUTES MIDDLEWARE
-const authRoutes = require("./routes/authRoutes");
-const postRoutes = require("./routes/postRoutes");
 app.use("/api", authRoutes);
 app.use("/api", postRoutes);
 
