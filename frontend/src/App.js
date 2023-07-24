@@ -62,43 +62,12 @@ const App = () => {
               <Route path="/" element={<Home data={homeData} />} />
               <Route path="/login" element={<LogIn />} />
               <Route path="/register" element={<Register />} />
-              <Route
-                path="/post/:id"
-                element={<SinglePost data={singlePostData} />}
-              />
+              <Route path="/post/:id" element={<SinglePost data={singlePostData} />}/>
               <Route path="*" element={<NotFound />} />
-              <Route
-                path="/admin/dashboard"
-                element={
-                  <AdminRoute>
-                    <AdminDashboardHOC />
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/post/create"
-                element={
-                  <AdminRoute>
-                    <CreatePostHOC />
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/admin/post/edit/:id"
-                element={
-                  <AdminRoute>
-                    <EditPostHOC />
-                  </AdminRoute>
-                }
-              />
-              <Route
-                path="/user/dashboard"
-                element={
-                  <UserRoute>
-                    <UserDashboardHOC />
-                  </UserRoute>
-                }
-              />
+              <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboardHOC /></AdminRoute>}/>
+              <Route path="/admin/post/create" element={<AdminRoute><CreatePostHOC /></AdminRoute>}/>
+              <Route path="/admin/post/edit/:id" element={<AdminRoute><EditPostHOC /></AdminRoute>}/>
+              <Route path="/user/dashboard"element={<UserRoute><UserDashboardHOC /></UserRoute>}/>
             </Routes>
           </BrowserRouter>
         </ProSidebarProvider>
