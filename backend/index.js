@@ -48,12 +48,15 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(cors({
-  origin: ['https://project-tugas-akhir-react.vercel.app/'],
-  methods: ['get', 'post', 'put', 'delete'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true // Jika Anda ingin mengizinkan kredensial
-}));
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Expose-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Max-Age", "3600");
+  next();
+});
 
 //ROUTES MIDDLEWARE
 app.use("/api", authRoutes);
