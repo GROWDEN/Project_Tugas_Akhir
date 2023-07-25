@@ -14,7 +14,7 @@ const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
     origin: ['https://project-tugas-akhir-react.vercel.app/'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['get', 'post', 'put', 'delete'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true // Jika Anda ingin mengizinkan kredensial
   }
@@ -50,7 +50,7 @@ app.use(
 app.use(cookieParser());
 app.use(cors({
   origin: ['https://project-tugas-akhir-react.vercel.app/'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['get', 'post', 'put', 'delete'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true // Jika Anda ingin mengizinkan kredensial
 }));
