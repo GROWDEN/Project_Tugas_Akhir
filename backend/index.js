@@ -11,7 +11,14 @@ var cookieParser = require("cookie-parser");
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: ['https://project-tugas-akhir-react.vercel.app/'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true // Jika Anda ingin mengizinkan kredensial
+  }
+});
 
 const errorHandler = require("./middleware/error");
 
@@ -41,11 +48,12 @@ app.use(
   })
 );
 app.use(cookieParser());
-app.use(cors());
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  next();
-});
+app.use(cors({
+  origin: ['https://project-tugas-akhir-react.vercel.app/'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true // Jika Anda ingin mengizinkan kredensial
+}));
 
 //ROUTES MIDDLEWARE
 app.use("/api", authRoutes);
